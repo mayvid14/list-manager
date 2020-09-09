@@ -1,0 +1,26 @@
+<div class="col-12">
+  <p>{{str | async | json}}</p>
+
+  <div class="card-deck">
+    <div class="card border-info">
+      <div class="card-body">
+        <span class="lead text-info">Total: {{total | async}}</span>
+      </div>
+    </div>
+    <div class="card border-warning">
+      <div class="card-body">
+        <span class="lead text-warning">In Progress: {{inProgress | async}}</span>
+      </div>
+    </div>
+    <div class="card border-danger">
+      <div class="card-body">
+        <span class="lead text-danger">Rejected: {{rejected | async}}</span>
+      </div>
+    </div>
+    <div class="card border-success">
+      <div class="card-body">
+        <span class="lead text-success">Offered: {{offered | async}}</span>
+      </div>
+    </div>
+  </div>
+</div>

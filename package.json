@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
-  "version": "8.0.4",
-  "description": "Angular 10 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "list-manager",
+  "version": "0.0.1",
+  "description": "My personal list manager | Angular 10 with Electron (Typescript + SASS + Hot Reload)",
+  "homepage": "https://github.com/mayvid14/list-manager",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Divyam Nandanwar",
+    "email": "ndivyam14@gmail.com"
   },
   "keywords": [
     "angular",
@@ -95,5 +95,13 @@
   },
   "engines": {
     "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "@ngrx/effects": "10.0.0",
+    "@ngrx/entity": "10.0.0",
+    "@ngrx/schematics": "10.0.0",
+    "@ngrx/store": "10.0.0",
+    "dexie": "3.0.2",
+    "ngx-bootstrap": "6.1.0"
   }
 }
