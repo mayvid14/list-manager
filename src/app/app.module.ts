@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AgGridModule } from 'ag-grid-angular';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -14,13 +15,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 //Bootstrap elements
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './reducers';
 import { StatsComponent } from './components/stats/stats.component';
-import { SearchComponent } from './components/search/search.component';
 import { NewEntryComponent } from './components/new-entry/new-entry.component';
 import { ListComponent } from './components/list/list.component';
 import { CompanyEffects } from './store/company/company.effects';
@@ -32,7 +33,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, StatsComponent, SearchComponent, NewEntryComponent, ListComponent],
+  declarations: [AppComponent, StatsComponent, NewEntryComponent, ListComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -51,7 +52,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       metaReducers
     }),
     EffectsModule.forRoot([CompanyEffects, PostEffects]),
+    AgGridModule.withComponents([]),
     ModalModule.forRoot(),
+    TooltipModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

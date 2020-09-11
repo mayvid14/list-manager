@@ -4,8 +4,7 @@ import { Update } from '@ngrx/entity';
 import { Company } from './company.model';
 
 export const loadCompanys = createAction(
-  '[Company/API] Load Companys', 
-  props<{ companys: Company[] }>()
+  '[Company/API] Load Companys'
 );
 
 export const addCompany = createAction(
@@ -24,7 +23,7 @@ export const deleteCompany = createAction(
 );
 
 export const loadCompanysSuccess = createAction(
-  '[Company/API] Load Companys Success', 
+  '[Company/API] Load Companys Success',
   props<{ companys: Company[] }>()
 );
 

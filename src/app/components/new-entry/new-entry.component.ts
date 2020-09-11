@@ -6,7 +6,10 @@ import { selectPostState } from '../../store/post/post.selector';
 import { Post } from '../../store/post/post.model';
 import { selectAll as selectAllPosts } from '../../store/post/post.reducer';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { addPost } from 'app/store/post/post.actions';
+import { addPost } from '../../store/post/post.actions';
+import { Company } from '../../store/company/company.model';
+import { ApplicationStatus } from '../../types/ApplicationStatus';
+import { addCompany } from '../../store/company/company.actions';
 
 @Component({
   selector: 'app-new-entry',
@@ -16,14 +19,19 @@ import { addPost } from 'app/store/post/post.actions';
 export class NewEntryComponent implements OnInit {
   posts: Observable<Array<Post>>;
   modalRef: BsModalRef;
-  form: FormGroup;
+  newPostForm: FormGroup;
+  newEntryForm: FormGroup;
   alreadyExists = false;
 
   constructor(private store: Store, private modalService: BsModalService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.posts = this.store.pipe(select(selectPostState), select(selectAllPosts));
-    this.form = this.fb.group({
+    this.newEntryForm = this.fb.group({
+      name: ['', [Validators.minLength(2), Validators.required, Validators.pattern('[a-zA-Z0-9 ,-.]+')]],
+      postName: [null, [Validators.required]]
+    });
+    this.newPostForm = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.required, Validators.pattern('[a-zA-Z0-9 ,-.]+')]]
     });
   }
@@ -33,16 +41,31 @@ export class NewEntryComponent implements OnInit {
   }
 
   addPost(): void {
-    const { name } = this.form.value;
+    const { name } = this.newPostForm.value;
     this.posts.subscribe(posts => {
       if (posts.filter(post => post.name.toLowerCase().trim() === name.toLowerCase().trim()).length) {
         this.alreadyExists = true;
       } else {
         this.alreadyExists = false;
         this.store.dispatch(addPost({ post: { name } }));
-        this.form.reset();
+        this.newPostForm.reset();
         this.modalRef.hide();
       }
+    }).unsubscribe();
+  }
+
+  addCompany(): void {
+    const { name, postName } = this.newEntryForm.value;
+    this.posts.subscribe(posts => {
+      const post = posts.filter(p => p.name === postName)[0];
+      const company: Company = {
+        name,
+        status: ApplicationStatus.Applied,
+        timestamp: new Date().getTime(),
+        post
+      };
+      this.store.dispatch(addCompany({ company }));
+      this.newEntryForm.reset();
     }).unsubscribe();
   }
 

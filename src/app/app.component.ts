@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
 import { Store } from '@ngrx/store';
 import { loadPosts } from './store/post/post.actions';
+import { loadCompanys } from './store/company/company.actions';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadPosts())
+    this.store.dispatch(loadPosts());
+    this.store.dispatch(loadCompanys());
   }
 }
