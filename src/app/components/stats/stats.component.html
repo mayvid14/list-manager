@@ -1,26 +1,35 @@
-<div class="col-12">
-  <p>{{str | async | json}}</p>
-
+<div class="col-12 mt-1">
   <div class="card-deck">
-    <div class="card border-info" tooltip="Number of applied jobs" [delay]="500" placement="bottom">
+    <div class="card bg-dark border-info" tooltip="Number of applied jobs" [delay]="500" placement="bottom">
       <div class="card-body">
         <span class="lead text-info">Total: {{total | async}}</span>
       </div>
     </div>
-    <div class="card border-warning" tooltip="Number of applications in progress" [delay]="500" placement="bottom">
+    <div class="card bg-dark border-warning" tooltip="Number of applications in progress" [delay]="500" placement="bottom">
       <div class="card-body">
         <span class="lead text-warning">In Progress: {{inProgress | async}}</span>
       </div>
     </div>
-    <div class="card border-danger" tooltip="Number of rejections" [delay]="500" placement="bottom">
+    <div class="card bg-dark border-danger" tooltip="Number of rejections" [delay]="500" placement="bottom">
       <div class="card-body">
         <span class="lead text-danger">Rejected: {{rejected | async}}</span>
       </div>
     </div>
-    <div class="card border-success" tooltip="Number of offers recieved" [delay]="500" placement="bottom">
+    <div class="card bg-dark border-success" tooltip="Number of offers recieved" [delay]="500" placement="bottom">
       <div class="card-body">
         <span class="lead text-success">Offered: {{offered | async}}</span>
       </div>
     </div>
+  </div>
+</div>
+<div class="card col-12 bg-dark text-light" tooltip="Number of applications per city" [delay]="500" placement="bottom">
+  <div class="card-body">
+    <ul class="list-inline">
+      <li class="list-inline-item small"
+        *ngFor="let pair of citiesCount | keyvalue">
+        {{pair.key}}
+        <span class="badge badge-info badge-pill">{{pair.value}}</span>
+      </li>
+    </ul>
   </div>
 </div>

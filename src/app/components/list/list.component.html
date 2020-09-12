@@ -3,12 +3,20 @@
     <div class="form-row justify-content-around">
       <div class="col-6">
         <input type="text" placeholder="Search companies or posts" aria-label="Company and post filter"
-          formControlName="filterText" class="form-control" (change)="changedValue()">
+          formControlName="filterText" class="form-control bg-dark text-light" (change)="changedValue()">
       </div>
       <div class="col-3">
-        <select class="form-control" aria-label="Filter by status" formControlName="filterStatus"
+        <select class="form-control bg-dark text-light" aria-label="Filter by status" formControlName="filterStatus"
           (change)="changedValue()">
           <option *ngFor="let opt of filterOpts" [ngValue]="opt.value">{{opt.key}}</option>
+        </select>
+      </div>
+      <div class="col-2">
+        <select class="form-control bg-dark text-light" aria-label="Filter by city" formControlName="filterCity"
+          (change)="changedValue()">
+          <option [ngValue]="null">All cities</option>
+          <option *ngFor="let opt of cityArr | keyvalue" [ngValue]="opt.value">Jobs
+            {{opt.value === 'Remote' ? 'that are' : 'in'}} {{opt.value}}</option>
         </select>
       </div>
     </div>
@@ -22,33 +30,40 @@
 </div>
 
 <ng-template #editModal>
-  <div class="modal-header">
+  <div class="modal-header bg-dark text-light">
     <h4 class="modal-title pull-left">Edit Application</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form [formGroup]="editPostForm">
-    <div class="modal-body">
+    <div class="modal-body bg-dark text-light">
       <div class="form-group">
         <label for="editName">Company</label>
-        <input type="text" name="editName" id="editName" formControlName="name" class="form-control">
+        <input type="text" name="editName" id="editName" formControlName="name" class="form-control bg-dark text-light">
       </div>
       <div class="form-group">
         <label for="editPostName">Post</label>
-        <select class="form-control" name="editPostName" id="editPostName" formControlName="postName">
+        <select class="form-control bg-dark text-light" name="editPostName" id="editPostName"
+          formControlName="postName">
           <option *ngFor="let opts of postsOpts | async" [ngValue]="opts.name">{{opts.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="editStatus">Status</label>
-        <!-- <input type="text" name="name" id="editStatus" formControlName="name"> -->
         <div class="btn-group" btnRadioGroup formControlName="status" id="editStatus" name="editStatus">
           <label *ngFor="let opt of statusOpts" [btnRadio]="opt.value" class="btn btn-primary">{{opt.key}}</label>
         </div>
       </div>
+      <div class="form-group">
+        <label for="editCity">City</label>
+        <select class="form-control bg-dark text-light" name="editCity" id="editCity" formControlName="city"
+          (change)="changedValue()">
+          <option *ngFor="let opt of cityArr | keyvalue" [ngValue]="opt.value">{{opt.value}}</option>
+        </select>
+      </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer bg-dark text-light">
       <button class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
       <button class="btn btn-success" type="submit" [disabled]="editPostForm.invalid"
         (click)="updatePost()">Submit</button>

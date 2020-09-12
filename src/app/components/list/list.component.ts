@@ -14,6 +14,7 @@ import { selectPostState } from '../../store/post/post.selector';
 import { selectAll as selectAllPosts } from '../../store/post/post.reducer';
 import { Update } from '@ngrx/entity';
 import { updateCompany } from '../../store/company/company.actions';
+import { Cities } from '../../types/Cities';
 
 @Component({
   selector: 'app-list',
@@ -29,6 +30,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     { headerName: 'Company', field: 'name', resizable: true },
     { headerName: 'Post', field: 'post.name', resizable: true },
     { headerName: 'Status', field: 'status', resizable: true },
+    { headerName: 'City', field: 'city', resizable: true },
     { headerName: 'Actions', resizable: true, cellRenderer: 'actionsColumnComponent' }
   ];
   frameworkComponents = {
@@ -67,6 +69,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     key: 'Offered',
     value: ApplicationStatus.Offered,
   }];
+  cityArr = Cities;
 
   constructor(private store: Store, private fb: FormBuilder, private modal: BsModalService) { }
 
@@ -80,12 +83,14 @@ export class ListComponent implements OnInit, AfterViewInit {
     this.companies = this.store.pipe(select(selectCompanyState), select(selectAll));
     this.gridFilter = this.fb.group({
       filterText: [''],
-      filterStatus: [null]
+      filterStatus: [null],
+      filterCity: [null],
     });
     this.editPostForm = this.fb.group({
       name: ['', [Validators.minLength(2), Validators.required, Validators.pattern('[a-zA-Z0-9 ,-.]+')]],
       postName: [null, [Validators.required]],
       status: [ApplicationStatus.Applied],
+      city: [''],
       idField: [''],
     });
     this.postsOpts = this.store.pipe(select(selectPostState), select(selectAllPosts));
@@ -93,16 +98,17 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   isExternalFilterPresent(): boolean {
     if (!this.gridFilter) return false;
-    const { filterText, filterStatus } = this.gridFilter.value;
-    return (filterText.trim() !== '') || (filterStatus !== null);
+    const { filterText, filterStatus, filterCity } = this.gridFilter.value;
+    return (filterText.trim() !== '') || (filterStatus !== null) || (filterCity !== null);
   }
 
   doesExternalFilterPass(node: { data: Company }): boolean {
-    const { filterText, filterStatus } = this.gridFilter.value;
+    const { filterText, filterStatus, filterCity } = this.gridFilter.value;
     const { data } = node;
     let satisfiesText = data.name.toLowerCase().includes(filterText.toLowerCase()) || data.post.name.toLowerCase().includes(filterText.toLowerCase());
     let satisfiesStatus = filterStatus ? data.status === filterStatus : true;
-    return (satisfiesText && satisfiesStatus);
+    let satisfiesCity = filterCity ? data.city === filterCity : true;
+    return (satisfiesText && satisfiesStatus && satisfiesCity);
   }
 
   changedValue(): void {
@@ -115,12 +121,13 @@ export class ListComponent implements OnInit, AfterViewInit {
       postName: initialState.post.name,
       status: initialState.status,
       idField: initialState.id,
+      city: initialState.city,
     });
     this.modalRef = this.modal.show(this.modalTemplate);
   }
 
   updatePost(): void {
-    const { name, postName, status, idField } = this.editPostForm.value;
+    const { name, postName, status, idField, city } = this.editPostForm.value;
     this.postsOpts.subscribe((posts: Post[]) => {
       const post = posts.filter(p => p.name === postName)[0];
       const company: Update<Company> = {
@@ -129,7 +136,8 @@ export class ListComponent implements OnInit, AfterViewInit {
           name,
           status,
           timestamp: new Date().getTime(),
-          post
+          post,
+          city
         }
       };
       this.store.dispatch(updateCompany({ company }));

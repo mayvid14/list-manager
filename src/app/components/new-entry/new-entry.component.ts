@@ -10,6 +10,7 @@ import { addPost } from '../../store/post/post.actions';
 import { Company } from '../../store/company/company.model';
 import { ApplicationStatus } from '../../types/ApplicationStatus';
 import { addCompany } from '../../store/company/company.actions';
+import { Cities } from 'app/types/Cities';
 
 @Component({
   selector: 'app-new-entry',
@@ -22,6 +23,7 @@ export class NewEntryComponent implements OnInit {
   newPostForm: FormGroup;
   newEntryForm: FormGroup;
   alreadyExists = false;
+  cityArray = Cities;
 
   constructor(private store: Store, private modalService: BsModalService, private fb: FormBuilder) { }
 
@@ -29,7 +31,8 @@ export class NewEntryComponent implements OnInit {
     this.posts = this.store.pipe(select(selectPostState), select(selectAllPosts));
     this.newEntryForm = this.fb.group({
       name: ['', [Validators.minLength(2), Validators.required, Validators.pattern('[a-zA-Z0-9 ,-.]+')]],
-      postName: [null, [Validators.required]]
+      postName: [null, [Validators.required]],
+      city: [null, [Validators.required]]
     });
     this.newPostForm = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.required, Validators.pattern('[a-zA-Z0-9 ,-.]+')]]
@@ -55,14 +58,15 @@ export class NewEntryComponent implements OnInit {
   }
 
   addCompany(): void {
-    const { name, postName } = this.newEntryForm.value;
+    const { name, postName, city } = this.newEntryForm.value;
     this.posts.subscribe(posts => {
       const post = posts.filter(p => p.name === postName)[0];
       const company: Company = {
         name,
         status: ApplicationStatus.Applied,
         timestamp: new Date().getTime(),
-        post
+        post,
+        city
       };
       this.store.dispatch(addCompany({ company }));
       this.newEntryForm.reset();

@@ -5,7 +5,7 @@ import { ICellRendererParams, IAfterGuiAttachedParams } from 'ag-grid-community'
 @Component({
   selector: 'app-actions-column',
   template: `
-    <button type="button" class="btn btn-info btn-sm" (click)="invokePopup()">Edit Application</button>
+    <button type="button" class="btn btn-dark btn-sm" (click)="invokePopup()">Edit Application</button>
   `,
   styles: []
 })

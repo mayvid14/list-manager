@@ -1,16 +1,23 @@
-<div class="card col-12 mt-4">
+<div class="card bg-dark text-light col-12 mt-4">
   <div class="card-body">
     <form [formGroup]="newEntryForm">
       <div class="form-row">
-        <div class="form-group col-6">
-          <input type="text" class="form-control" id="companyName" placeholder="Enter name of the company"
+        <div class="form-group col-5">
+          <input type="text" class="form-control bg-dark text-light" id="companyName" placeholder="Enter name of the company"
             aria-label="Organization" formControlName="name">
         </div>
-        <div class="form-group col-4">
-          <select id="inputState" class="form-control" aria-label="Post" aria-placeholder="Select the post"
+        <div class="form-group col-3">
+          <select id="inputState" class="form-control bg-dark text-light" aria-label="Post" aria-placeholder="Select the post"
             formControlName="postName">
             <option [ngValue]="null">Select Post...</option>
             <option *ngFor="let post of posts | async" [ngValue]="post.name">{{post.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-2">
+          <select id="inputCity" class="form-control bg-dark text-light" aria-label="City" aria-placeholder="Select the city"
+            formControlName="city">
+            <option [ngValue]="null" disabled>Select City...</option>
+            <option *ngFor="let city of cityArray | keyvalue" [ngValue]="city.value">{{city.value}}</option>
           </select>
         </div>
         <div class="form-group col-1">
@@ -28,22 +35,22 @@
 </div>
 
 <ng-template #modal>
-  <div class="modal-header">
+  <div class="modal-header bg-dark text-light">
     <h4 class="modal-title pull-left">Add New Post</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <form [formGroup]="newPostForm">
-    <div class="modal-body">
+    <div class="modal-body bg-dark text-light">
       <div class="form-group">
         <label for="postName">Post</label>
-        <input type="text" class="form-control" id="postName" placeholder="Enter name of the designation"
+        <input type="text" class="form-control bg-dark text-light" id="postName" placeholder="Enter name of the designation"
           formControlName="name">
         <small class="form-text text-danger" *ngIf="alreadyExists">Post already exists</small>
       </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer bg-dark text-light">
       <button class="btn btn-danger" type="reset" (click)="alreadyExists = false">Clear</button>
       <button class="btn btn-success" type="submit" [disabled]="newPostForm.invalid" (click)="addPost()">Add</button>
     </div>

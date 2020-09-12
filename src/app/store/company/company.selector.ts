@@ -9,3 +9,4 @@ export const selectCompanyState = (state: State) => state[companiesFeatureKey];
 export const selectInProgressCompanies = getReducerFunction(ApplicationStatus.InProgress);
 export const selectRejectedCompanies = getReducerFunction(ApplicationStatus.Rejected);
 export const selectOfferedCompanies = getReducerFunction(ApplicationStatus.Offered);
+export const countCities = (companies: Company[]) => companies.reduce((obj, company) => obj[company.city] ? {...obj, [company.city]: (obj[company.city]+1)} : {...obj, [company.city]: 1}, {});
