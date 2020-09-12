@@ -1,3 +1,11 @@
 :host {
   width: 100%;
+
+  .ag-row {
+    z-index: 0;
+
+    &.ag-row-focus {
+      z-index: 1;
+    }
+  }
 }
