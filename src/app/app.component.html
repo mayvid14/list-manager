@@ -1,12 +1,12 @@
 <nav class="navbar navbar-dark fixed-top bg-dark justify-content-between p-0">
   <a class="navbar-brand text-light">
-    <img src="assets/icons/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img src="assets/icons/favicon.png" width="30" height="30" class="d-inline-block align-top" alt="">
     List Manager
   </a>
   <div class="btn-group" role="group" aria-label="First group">
-    <button type="button" class="btn btn-dark">_</button>
-    <button type="button" class="btn btn-dark">^</button>
-    <button type="button" class="btn btn-danger">X</button>
+    <button type="button" class="btn btn-dark" (click)="minimize()">_</button>
+    <button type="button" class="btn btn-dark" (click)="maximize()">+</button>
+    <button type="button" class="btn btn-danger" (click)="close()">X</button>
   </div>
 </nav>
 <div class="container mt-70">

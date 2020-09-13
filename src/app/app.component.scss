@@ -1,6 +1,11 @@
 :host {
   nav {
     box-shadow: 0px 1px 5px 0px #272b30;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+    button{
+      -webkit-app-region: no-drag;
+    }
   }
   .mt-70{
     margin-top: 70px;

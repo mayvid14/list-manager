@@ -34,4 +34,17 @@ export class AppComponent implements OnInit {
     this.store.dispatch(loadPosts());
     this.store.dispatch(loadCompanys());
   }
+
+  minimize(): void {
+    this.electronService.remote.getCurrentWindow().minimize();
+  }
+
+  maximize(): void {
+    const win = this.electronService.remote.getCurrentWindow();
+    win.isMaximized() ? win.unmaximize() : win.maximize();
+  }
+
+  close(): void {
+    this.electronService.remote.getCurrentWindow().close();
+  }
 }

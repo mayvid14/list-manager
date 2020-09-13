@@ -1,5 +1,5 @@
 {
-  "productName": "angular-electron",
+  "productName": "List Manager",
   "directories": {
     "output": "release/"
   },

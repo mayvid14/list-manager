@@ -17,10 +17,12 @@ function createWindow(): BrowserWindow {
     y: 0,
     width: size.width,
     height: size.height,
+    frame: false,
+    title: 'List Manager',
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
-      enableRemoteModule : false // true if you want to use remote module in renderer context (ie. Angular)
+      enableRemoteModule : true // true if you want to use remote module in renderer context (ie. Angular)
     },
   });
 

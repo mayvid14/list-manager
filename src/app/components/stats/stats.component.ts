@@ -16,7 +16,7 @@ export class StatsComponent implements OnInit, OnDestroy {
   inProgress: Observable<number>;
   rejected: Observable<number>;
   offered: Observable<number>;
-  citiesCount: object;
+  citiesCount: any;
   subscription: Subscription;
 
   constructor(private store: Store) { }
